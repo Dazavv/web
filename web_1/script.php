@@ -19,7 +19,7 @@ if (isset($_POST['x']) && isset($_POST['y']) && isset($_POST['r'])) {
     $r = $_POST['r'];
 
     //валидность
-    if (is_numeric($r) && is_numeric($x) && is_numeric($y) && ($y <= 3 && $y >= -3)) {
+    if (is_numeric($r) && is_numeric($x) && is_numeric($y)) {
         $result = check($x, $y, $r);
         $workScriptTime = round((microtime(true) - $startTime), 10);
         
