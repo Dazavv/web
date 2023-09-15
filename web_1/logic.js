@@ -1,23 +1,31 @@
 var sendValidForm = document.getElementById('form-with-validation');
+var patternInt = /^[+-]?[0-3]{1}$/;
+var patternFloat = /^[+-]?[0-2](\.[0-9]+)?$/;
 
 sendValidForm.addEventListener('submit', function(e) {
   e.preventDefault();
 
   var r = document.getElementById('r').value;
-  var y = parseInt(document.getElementById('y').value);
+  var y = document.getElementById('y').value;
   var checkboxes = document.querySelectorAll('input[name="x"]:checked');
   var x;
   
   function validateY(y){
-    if (isNaN(y) || y < -3 || y > 3) {
-      document.getElementById("error-y").textContent = "Y должен быть в диапазоне от -3 до 3";
-      return false;
-    } else {
+    if (patternInt.test(y)) {
+      y = parseFloat(y);
       document.getElementById("error-y").textContent = "";
       return true;
     }
+    if (patternFloat.test(y)) {
+      y = parseFloat(y);
+      document.getElementById("error-y").textContent = "";
+      return true;
+    }
+    else {
+      document.getElementById("error-y").textContent = "Y должен быть в диапазоне от -3 до 3";
+      return false;
+    }
   }
-
   function validateX(checkboxes){
     if (checkboxes.length == 0 || checkboxes.length > 1) {
       document.getElementById("error-x").textContent = "выберите один checkbox";
@@ -53,7 +61,7 @@ sendValidForm.addEventListener('submit', function(e) {
         }
       }
     };
-    xhr.send('&x=' + x + '&y=' + y + '&r=' + r);
+    xhr.send('x=' + x + '&y=' + y + '&r=' + r);
   }
 });
 
